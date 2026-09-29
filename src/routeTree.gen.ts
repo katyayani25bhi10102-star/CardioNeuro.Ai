@@ -10,33 +10,80 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiDemoRouteImport } from './routes/api.demo'
+import { Route as ApiHealthRouteImport } from './routes/api.health'
+import { Route as ApiModelMetricsRouteImport } from './routes/api.model-metrics'
+import { Route as ApiUploadRouteImport } from './routes/api.upload'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDemoRoute = ApiDemoRouteImport.update({
+  id: '/api/demo',
+  path: '/api/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiHealthRoute = ApiHealthRouteImport.update({
+  id: '/api/health',
+  path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiModelMetricsRoute = ApiModelMetricsRouteImport.update({
+  id: '/api/model-metrics',
+  path: '/api/model-metrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiUploadRoute = ApiUploadRouteImport.update({
+  id: '/api/upload',
+  path: '/api/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/demo': typeof ApiDemoRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/model-metrics': typeof ApiModelMetricsRoute
+  '/api/upload': typeof ApiUploadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/demo': typeof ApiDemoRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/model-metrics': typeof ApiModelMetricsRoute
+  '/api/upload': typeof ApiUploadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/demo': typeof ApiDemoRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/model-metrics': typeof ApiModelMetricsRoute
+  '/api/upload': typeof ApiUploadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/api/demo' | '/api/health' | '/api/model-metrics' | '/api/upload'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/demo' | '/api/health' | '/api/model-metrics' | '/api/upload'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/demo'
+    | '/api/health'
+    | '/api/model-metrics'
+    | '/api/upload'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiDemoRoute: typeof ApiDemoRoute
+  ApiHealthRoute: typeof ApiHealthRoute
+  ApiModelMetricsRoute: typeof ApiModelMetricsRoute
+  ApiUploadRoute: typeof ApiUploadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +95,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/demo': {
+      id: '/api/demo'
+      path: '/api/demo'
+      fullPath: '/api/demo'
+      preLoaderRoute: typeof ApiDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/health': {
+      id: '/api/health'
+      path: '/api/health'
+      fullPath: '/api/health'
+      preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/model-metrics': {
+      id: '/api/model-metrics'
+      path: '/api/model-metrics'
+      fullPath: '/api/model-metrics'
+      preLoaderRoute: typeof ApiModelMetricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/upload': {
+      id: '/api/upload'
+      path: '/api/upload'
+      fullPath: '/api/upload'
+      preLoaderRoute: typeof ApiUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiDemoRoute: ApiDemoRoute,
+  ApiHealthRoute: ApiHealthRoute,
+  ApiModelMetricsRoute: ApiModelMetricsRoute,
+  ApiUploadRoute: ApiUploadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
