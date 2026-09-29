@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalysisRouteImport } from './routes/analysis'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DatasetRouteImport } from './routes/dataset'
+import { Route as ModelRouteImport } from './routes/model'
 import { Route as ApiDemoRouteImport } from './routes/api.demo'
 import { Route as ApiHealthRouteImport } from './routes/api.health'
 import { Route as ApiModelMetricsRouteImport } from './routes/api.model-metrics'
@@ -36,6 +37,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const DatasetRoute = DatasetRouteImport.update({
   id: '/dataset',
   path: '/dataset',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelRoute = ModelRouteImport.update({
+  id: '/model',
+  path: '/model',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiDemoRoute = ApiDemoRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/analysis': typeof AnalysisRoute
   '/dashboard': typeof DashboardRoute
   '/dataset': typeof DatasetRoute
+  '/model': typeof ModelRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/analysis': typeof AnalysisRoute
   '/dashboard': typeof DashboardRoute
   '/dataset': typeof DatasetRoute
+  '/model': typeof ModelRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/analysis': typeof AnalysisRoute
   '/dashboard': typeof DashboardRoute
   '/dataset': typeof DatasetRoute
+  '/model': typeof ModelRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/analysis'
     | '/dashboard'
     | '/dataset'
+    | '/model'
     | '/api/demo'
     | '/api/health'
     | '/api/model-metrics'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/analysis'
     | '/dashboard'
     | '/dataset'
+    | '/model'
     | '/api/demo'
     | '/api/health'
     | '/api/model-metrics'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/analysis'
     | '/dashboard'
     | '/dataset'
+    | '/model'
     | '/api/demo'
     | '/api/health'
     | '/api/model-metrics'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   AnalysisRoute: typeof AnalysisRoute
   DashboardRoute: typeof DashboardRoute
   DatasetRoute: typeof DatasetRoute
+  ModelRoute: typeof ModelRoute
   ApiDemoRoute: typeof ApiDemoRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiModelMetricsRoute: typeof ApiModelMetricsRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/dataset'
       fullPath: '/dataset'
       preLoaderRoute: typeof DatasetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/model': {
+      id: '/model'
+      path: '/model'
+      fullPath: '/model'
+      preLoaderRoute: typeof ModelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/demo': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalysisRoute: AnalysisRoute,
   DashboardRoute: DashboardRoute,
   DatasetRoute: DatasetRoute,
+  ModelRoute: ModelRoute,
   ApiDemoRoute: ApiDemoRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiModelMetricsRoute: ApiModelMetricsRoute,
