@@ -10,6 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnalysisRouteImport } from './routes/analysis'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as DatasetRouteImport } from './routes/dataset'
+import { Route as ModelRouteImport } from './routes/model'
 import { Route as ApiDemoRouteImport } from './routes/api.demo'
 import { Route as ApiHealthRouteImport } from './routes/api.health'
 import { Route as ApiModelMetricsRouteImport } from './routes/api.model-metrics'
@@ -18,6 +22,26 @@ import { Route as ApiUploadRouteImport } from './routes/api.upload'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalysisRoute = AnalysisRouteImport.update({
+  id: '/analysis',
+  path: '/analysis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatasetRoute = DatasetRouteImport.update({
+  id: '/dataset',
+  path: '/dataset',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelRoute = ModelRouteImport.update({
+  id: '/model',
+  path: '/model',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiDemoRoute = ApiDemoRouteImport.update({
@@ -43,6 +67,10 @@ const ApiUploadRoute = ApiUploadRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analysis': typeof AnalysisRoute
+  '/dashboard': typeof DashboardRoute
+  '/dataset': typeof DatasetRoute
+  '/model': typeof ModelRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -50,6 +78,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analysis': typeof AnalysisRoute
+  '/dashboard': typeof DashboardRoute
+  '/dataset': typeof DatasetRoute
+  '/model': typeof ModelRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -58,6 +90,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analysis': typeof AnalysisRoute
+  '/dashboard': typeof DashboardRoute
+  '/dataset': typeof DatasetRoute
+  '/model': typeof ModelRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -66,12 +102,33 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/api/demo' | '/api/health' | '/api/model-metrics' | '/api/upload'
+    | '/'
+    | '/analysis'
+    | '/dashboard'
+    | '/dataset'
+    | '/model'
+    | '/api/demo'
+    | '/api/health'
+    | '/api/model-metrics'
+    | '/api/upload'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/demo' | '/api/health' | '/api/model-metrics' | '/api/upload'
+  to:
+    | '/'
+    | '/analysis'
+    | '/dashboard'
+    | '/dataset'
+    | '/model'
+    | '/api/demo'
+    | '/api/health'
+    | '/api/model-metrics'
+    | '/api/upload'
   id:
     | '__root__'
     | '/'
+    | '/analysis'
+    | '/dashboard'
+    | '/dataset'
+    | '/model'
     | '/api/demo'
     | '/api/health'
     | '/api/model-metrics'
@@ -80,6 +137,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalysisRoute: typeof AnalysisRoute
+  DashboardRoute: typeof DashboardRoute
+  DatasetRoute: typeof DatasetRoute
+  ModelRoute: typeof ModelRoute
   ApiDemoRoute: typeof ApiDemoRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiModelMetricsRoute: typeof ApiModelMetricsRoute
@@ -93,6 +154,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analysis': {
+      id: '/analysis'
+      path: '/analysis'
+      fullPath: '/analysis'
+      preLoaderRoute: typeof AnalysisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dataset': {
+      id: '/dataset'
+      path: '/dataset'
+      fullPath: '/dataset'
+      preLoaderRoute: typeof DatasetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/model': {
+      id: '/model'
+      path: '/model'
+      fullPath: '/model'
+      preLoaderRoute: typeof ModelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/demo': {
@@ -128,6 +217,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalysisRoute: AnalysisRoute,
+  DashboardRoute: DashboardRoute,
+  DatasetRoute: DatasetRoute,
+  ModelRoute: ModelRoute,
   ApiDemoRoute: ApiDemoRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiModelMetricsRoute: ApiModelMetricsRoute,
