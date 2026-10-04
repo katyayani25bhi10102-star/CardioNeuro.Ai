@@ -20,7 +20,7 @@ export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const key = process.env.LOVABLE_API_KEY;
+        const key = process.env['LOVABLE_API_KEY'];
         if (!key) return Response.json({ error: "AI not configured" }, { status: 503 });
         let body: z.infer<typeof Body>;
         try { body = Body.parse(await request.json()); } catch { return Response.json({ error: "Invalid chat request." }, { status: 400 }); }
