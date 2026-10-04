@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Activity, BrainCircuit, Database, FlaskConical, HeartPulse, Info, LayoutDashboard, Menu, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
-import { AnalysisProvider, useAnalysis } from "@/context/analysis-context";
+import { useAnalysis } from "@/context/analysis-context";
 import { Button } from "@/components/ui/button";
 import { BackgroundCanvas } from "./background-canvas";
 
@@ -12,6 +12,7 @@ const links = [
   { to: "/model", label: "AI Model", icon: FlaskConical },
   { to: "/about", label: "About", icon: Info },
 ] as const;
+const sections = [["how-it-works", "How it works"], ["features", "Features"], ["symptom-assistant", "Symptom Assistant"], ["faq", "FAQ"]] as const;
 
 function ShellInner({ children }: { children: ReactNode }) {
   const path = useRouterState({ select: (state) => state.location.pathname });
@@ -27,20 +28,25 @@ function ShellInner({ children }: { children: ReactNode }) {
             <span className="grid size-9 place-items-center rounded-md border border-primary/60 bg-primary/10 shadow-glow"><HeartPulse className="size-5 text-primary" /></span>
             <span className="text-sm font-extrabold uppercase tracking-[0.12em]">CardioNeuro <span className="text-primary">AI</span></span>
           </Link>
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+          {path === "/" ? (
+            <nav className="hidden items-center gap-1 lg:flex" aria-label="Page sections">
+              {sections.map(([id, label]) => <a key={id} href={`#${id}`} className="rounded-md px-3 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring">{label}</a>)}
+              <Link to="/dashboard" className="ml-2 rounded-md bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-glow">Open App</Link>
+            </nav>
+          ) : <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
             {links.map(({ to, label, icon: Icon }) => <Link key={to} to={to} className={`flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold transition-colors ${path === to ? "bg-accent text-primary" : "text-muted-foreground hover:text-foreground"}`}><Icon className="size-3.5" />{label}</Link>)}
-          </nav>
+          </nav>}
           <div className="hidden items-center gap-2 border-l border-border pl-4 sm:flex"><span className={`size-2 rounded-full ${backendOnline ? "bg-success shadow-success" : backendOnline === false ? "bg-destructive" : "bg-muted-foreground"}`} /><span className="text-[11px] font-semibold text-muted-foreground">{backendOnline ? "Backend connected" : backendOnline === false ? "Backend offline" : "Checking backend"}</span></div>
           <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Toggle navigation" onClick={() => setOpen((value) => !value)}>{open ? <X /> : <Menu />}</Button>
         </div>
         {open && <nav className="grid gap-1 border-t border-border bg-background p-3 lg:hidden">{links.map(({ to, label, icon: Icon }) => <Link key={to} to={to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"><Icon className="size-4" />{label}</Link>)}</nav>}
       </header>
       <main className="relative z-10">{children}</main>
-      <footer className="relative z-10 border-t border-border bg-background/85 px-4 py-6 text-center text-xs leading-6 text-muted-foreground"><BrainCircuit className="mx-auto mb-2 size-4 text-primary" />CardioNeuro AI is an educational and research-oriented screening tool. Its predictions are based on the uploaded dataset and machine-learning models and are not a medical diagnosis. For medical concerns or symptoms, consult a qualified healthcare professional.<span className="mt-2 block text-[10px] uppercase tracking-[0.14em] text-muted-foreground/70">Decorative animation, not patient data</span></footer>
+      <footer className="relative z-10 border-t border-border bg-background/85 px-4 py-6 text-center text-xs leading-6 text-muted-foreground"><div className="mb-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2"><span className="flex items-center gap-2 font-extrabold uppercase tracking-[0.12em] text-foreground"><BrainCircuit className="size-4 text-primary" />CardioNeuro AI</span>{links.map(({ to, label }) => <Link key={to} to={to} className="hover:text-foreground">{label}</Link>)}</div>CardioNeuro AI is an educational and research-oriented screening tool. Its results are generated from machine-learning analysis of uploaded data and are not a medical diagnosis. Consult a qualified healthcare professional for medical advice.<span className="mt-2 block text-[10px] uppercase tracking-[0.14em] text-muted-foreground/70">Decorative animation, not patient data</span></footer>
     </div>
   );
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  return <AnalysisProvider><ShellInner>{children}</ShellInner></AnalysisProvider>;
+  return <ShellInner>{children}</ShellInner>;
 }
