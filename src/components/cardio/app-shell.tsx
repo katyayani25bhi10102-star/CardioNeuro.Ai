@@ -3,7 +3,7 @@ import { Activity, BrainCircuit, Database, FlaskConical, HeartPulse, Info, Layou
 import { useEffect, useState, type ReactNode } from "react";
 import { AnalysisProvider, useAnalysis } from "@/context/analysis-context";
 import { Button } from "@/components/ui/button";
-import { DnaBackground } from "./dna-background";
+import { BackgroundCanvas } from "./background-canvas";
 
 const links = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -19,8 +19,8 @@ function ShellInner({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   useEffect(() => { void checkHealth(); }, [checkHealth]);
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <DnaBackground />
+    <div className="relative min-h-screen bg-background text-foreground">
+      <BackgroundCanvas />
       <header className="sticky top-0 z-50 border-b border-border/80 bg-background/88 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-[1540px] items-center gap-6 px-4 sm:px-6">
           <Link to="/" className="mr-auto flex items-center gap-3" aria-label="CardioNeuro AI home">
@@ -36,7 +36,7 @@ function ShellInner({ children }: { children: ReactNode }) {
         {open && <nav className="grid gap-1 border-t border-border bg-background p-3 lg:hidden">{links.map(({ to, label, icon: Icon }) => <Link key={to} to={to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"><Icon className="size-4" />{label}</Link>)}</nav>}
       </header>
       <main className="relative z-10">{children}</main>
-      <footer className="relative z-10 border-t border-border bg-background/85 px-4 py-6 text-center text-xs leading-6 text-muted-foreground"><BrainCircuit className="mx-auto mb-2 size-4 text-primary" />CardioNeuro AI is an educational and research-oriented screening tool. Its predictions are based on the uploaded dataset and machine-learning models and are not a medical diagnosis. For medical concerns or symptoms, consult a qualified healthcare professional.</footer>
+      <footer className="relative z-10 border-t border-border bg-background/85 px-4 py-6 text-center text-xs leading-6 text-muted-foreground"><BrainCircuit className="mx-auto mb-2 size-4 text-primary" />CardioNeuro AI is an educational and research-oriented screening tool. Its predictions are based on the uploaded dataset and machine-learning models and are not a medical diagnosis. For medical concerns or symptoms, consult a qualified healthcare professional.<span className="mt-2 block text-[10px] uppercase tracking-[0.14em] text-muted-foreground/70">Decorative animation, not patient data</span></footer>
     </div>
   );
 }
