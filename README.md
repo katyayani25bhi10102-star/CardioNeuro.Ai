@@ -101,8 +101,8 @@ pip install -r requirements.txt
 cp .env.example .env               # add GEMINI_API_KEY to enable the assistant
 uvicorn main:app --reload          # http://localhost:8000
 ```
-Check it: <http://localhost:8000/api/health> should return `{"status":"ok","service":"CardioNeuro AI",...}`.
-Interactive API docs: <http://localhost:8000/docs>.
+Check it: https://cardio-neuro-ai.vercel.app/ should return `{"status":"ok","service":"CardioNeuro AI",...}`.
+
 
 ### 2. Frontend
 ```bash
