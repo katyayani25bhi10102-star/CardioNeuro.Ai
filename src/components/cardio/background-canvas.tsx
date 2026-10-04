@@ -51,7 +51,7 @@ export function BackgroundCanvas() {
 
       // 2 grid + scanline
       ctx.strokeStyle = C.cyan; ctx.lineWidth = 1;
-      for (const [step, a] of [[24, 0.04], [120, 0.08]]) {
+      for (const [step, a] of [[24, 0.04], [120, 0.08]] as const) {
         ctx.globalAlpha = a; ctx.beginPath();
         for (let x = 0; x < w; x += step) { ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, h); }
         for (let y = 0; y < h; y += step) { ctx.moveTo(0, y + 0.5); ctx.lineTo(w, y + 0.5); }
@@ -71,8 +71,8 @@ export function BackgroundCanvas() {
       }
       ctx.strokeStyle = C.cyan;
       for (let i = 0; i < parts.length; i++) for (let j = i + 1; j < parts.length; j++) {
-        const d = Math.hypot(parts[i].x - parts[j].x, parts[i].y - parts[j].y);
-        if (d < 150) { ctx.globalAlpha = (1 - d / 150) * 0.25; ctx.beginPath(); ctx.moveTo(parts[i].x + px(4), parts[i].y + py(4)); ctx.lineTo(parts[j].x + px(4), parts[j].y + py(4)); ctx.stroke(); }
+        const d = Math.hypot(parts[i]!.x - parts[j]!.x, parts[i]!.y - parts[j]!.y);
+        if (d < 150) { ctx.globalAlpha = (1 - d / 150) * 0.25; ctx.beginPath(); ctx.moveTo(parts[i]!.x + px(4), parts[i]!.y + py(4)); ctx.lineTo(parts[j]!.x + px(4), parts[j]!.y + py(4)); ctx.stroke(); }
       }
       ctx.fillStyle = C.cyan; ctx.shadowColor = C.cyan; ctx.shadowBlur = 8;
       for (const p of parts) { ctx.globalAlpha = 0.7; ctx.beginPath(); ctx.arc(p.x + px(4), p.y + py(4), 1.6, 0, Math.PI * 2); ctx.fill(); }
@@ -126,10 +126,10 @@ export function BackgroundCanvas() {
 
       // 6 pulse rings
       for (let i = rings.length - 1; i >= 0; i--) {
-        const p = (t - rings[i].t0) / 1.2;
+        const p = (t - rings[i]!.t0) / 1.2;
         if (p >= 1) { rings.splice(i, 1); continue; }
         ctx.globalAlpha = (1 - p) * 0.6; ctx.strokeStyle = i % 2 ? C.cyan : C.green; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.arc(rings[i].x + px(8), rings[i].y, p * 120, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(rings[i]!.x + px(8), rings[i]!.y, p * 120, 0, Math.PI * 2); ctx.stroke();
       }
 
       // vignette
