@@ -15,6 +15,8 @@ import { Route as AnalysisRouteImport } from './routes/analysis'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as DatasetRouteImport } from './routes/dataset'
 import { Route as ModelRouteImport } from './routes/model'
+import { Route as ApiChatRouteImport } from './routes/api.chat'
+import { Route as ApiChatStatusRouteImport } from './routes/api.chat-status'
 import { Route as ApiDemoRouteImport } from './routes/api.demo'
 import { Route as ApiHealthRouteImport } from './routes/api.health'
 import { Route as ApiModelMetricsRouteImport } from './routes/api.model-metrics'
@@ -50,6 +52,16 @@ const ModelRoute = ModelRouteImport.update({
   path: '/model',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatStatusRoute = ApiChatStatusRouteImport.update({
+  id: '/api/chat-status',
+  path: '/api/chat-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiDemoRoute = ApiDemoRouteImport.update({
   id: '/api/demo',
   path: '/api/demo',
@@ -78,6 +90,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/dataset': typeof DatasetRoute
   '/model': typeof ModelRoute
+  '/api/chat': typeof ApiChatRoute
+  '/api/chat-status': typeof ApiChatStatusRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -90,6 +104,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/dataset': typeof DatasetRoute
   '/model': typeof ModelRoute
+  '/api/chat': typeof ApiChatRoute
+  '/api/chat-status': typeof ApiChatStatusRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -103,6 +119,8 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/dataset': typeof DatasetRoute
   '/model': typeof ModelRoute
+  '/api/chat': typeof ApiChatRoute
+  '/api/chat-status': typeof ApiChatStatusRoute
   '/api/demo': typeof ApiDemoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/model-metrics': typeof ApiModelMetricsRoute
@@ -117,6 +135,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dataset'
     | '/model'
+    | '/api/chat'
+    | '/api/chat-status'
     | '/api/demo'
     | '/api/health'
     | '/api/model-metrics'
@@ -129,6 +149,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dataset'
     | '/model'
+    | '/api/chat'
+    | '/api/chat-status'
     | '/api/demo'
     | '/api/health'
     | '/api/model-metrics'
@@ -141,6 +163,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dataset'
     | '/model'
+    | '/api/chat'
+    | '/api/chat-status'
     | '/api/demo'
     | '/api/health'
     | '/api/model-metrics'
@@ -154,6 +178,8 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   DatasetRoute: typeof DatasetRoute
   ModelRoute: typeof ModelRoute
+  ApiChatRoute: typeof ApiChatRoute
+  ApiChatStatusRoute: typeof ApiChatStatusRoute
   ApiDemoRoute: typeof ApiDemoRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiModelMetricsRoute: typeof ApiModelMetricsRoute
@@ -204,6 +230,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModelRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat-status': {
+      id: '/api/chat-status'
+      path: '/api/chat-status'
+      fullPath: '/api/chat-status'
+      preLoaderRoute: typeof ApiChatStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/demo': {
       id: '/api/demo'
       path: '/api/demo'
@@ -242,6 +282,8 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   DatasetRoute: DatasetRoute,
   ModelRoute: ModelRoute,
+  ApiChatRoute: ApiChatRoute,
+  ApiChatStatusRoute: ApiChatStatusRoute,
   ApiDemoRoute: ApiDemoRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiModelMetricsRoute: ApiModelMetricsRoute,
