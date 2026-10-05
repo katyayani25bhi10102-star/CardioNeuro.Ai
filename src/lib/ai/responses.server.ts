@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText, type ModelMessage } from "ai";
+import { streamText, type ModelMessage, type UIMessage } from "ai";
 
 import {
   createLovableAiGatewayRunIdFetch,
@@ -44,7 +44,7 @@ export function createResponsesCall(
   });
   return {
     result,
-    response: () =>
-      withLovableAiGatewayRunIdHeader(result.toUIMessageStreamResponse({ sendReasoning: true }), runIdFetch),
+    response: (originalMessages: UIMessage[]) =>
+      withLovableAiGatewayRunIdHeader(result.toUIMessageStreamResponse({ originalMessages, sendReasoning: true, onFinish: () => { /* Session-only: do not persist health conversations. */ }, onError: (error) => error instanceof Error ? error.message : "The assistant could not respond." }), runIdFetch),
   };
 }
